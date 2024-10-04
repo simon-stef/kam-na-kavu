@@ -4,8 +4,15 @@ import Typography from '@mui/material/Typography';
 
 export const metadata = { title: 'Príspevok | KamNaKavu'};
 
-export default function PostDetail() {
+export default function PostDetail({
+  params,
+
+}: {
+  params: {
+    prispevokId: string;
+  }
+}) {
   return (
-    <Typography>Príspevok</Typography>
+    <Typography>Príspevok {params.prispevokId}</Typography>
   );
 }

@@ -1,12 +1,21 @@
 npx create-next-app@latest-Vytvorí nový aprouter
+
 ls – Vypíše adresár
+
 cd - zmení priečinok
+
 npm run dev – spusti projekt
+
 npm install @mui/material @emotion/react @emotion/styled – stiahne material ui
+
 npm run build – kontrola vsetkeho kodu v projekte
+
 git init - inicializuje prazdny git
+
 git branch -m main – prepne na hlavnu vetvu
+
 git config --global user.name „Moje meno“ – Da tam meno
+
 git config --global user.email „moj@email.com“ – da tam mail
 
 Homepage musí byť v priečinku app a v podpriečinku ohraničeného zátvorkami ktoré nextjs ignoruje.

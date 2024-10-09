@@ -2,47 +2,51 @@
 
 "use client";
 
-import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import { Home as HomeIcon, AccountCircle as AccountCircleIcon, AddCircle as AddCircleIcon, Login as LoginIcon, AppRegistration as AppRegistrationIcon } from '@mui/icons-material';
-import Link from 'next/link';  // Import Link from Next.js
 
-export default function SimpleBottomNavigation() {
-  const [value, setValue] = useState(0);
+import * as React from 'react';
+import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import LoginIcon from '@mui/icons-material/Login';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useRouter } from 'next/navigation';
+//import { useSession } from "next-auth/react";
+
+export default function Navbar() {
+  const [value, setValue] = React.useState('/');
+  const router = useRouter();
+  //const { data: session, status } = session();
+
+  const handleNavigation = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+    router.push(newValue);
+  };
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: '100%', position: 'fixed', bottom: 0 }}> {/* Fixes the NavBar */}
       <BottomNavigation
         showLabels
         value={value}
-        onChange={(event, newValue) => { setValue(newValue); }}
+        onChange={handleNavigation}
       >
-        {/* Home Link */}
-        <Link href="/" passHref legacyBehavior>
-          <BottomNavigationAction label="Domov" icon={<HomeIcon />} />
-        </Link>
+        <BottomNavigationAction label="Domov" value="/" icon={<HomeIcon />} />
+        <BottomNavigationAction label="Profily" value="/profil" icon={<AccountCircleIcon />} />
+        <BottomNavigationAction label="Príspevky" value="/prispevok" icon={<AddCircleIcon />} />
 
-        {/* Profile Link */}
-        <Link href="/profil" passHref legacyBehavior>
-          <BottomNavigationAction label="Profil" icon={<AccountCircleIcon />} />
-        </Link>
-
-        {/* Posts Link */}
-        <Link href="/prispevok" passHref legacyBehavior>
-          <BottomNavigationAction label="Príspevky" icon={<AddCircleIcon />} />
-        </Link>
-
-        {/* Login Link */}
-        <Link href="/auth/prihlasenie" passHref legacyBehavior>
-          <BottomNavigationAction label="Prihlásenie" icon={<LoginIcon />} />
-        </Link>
-
-        {/* Registration Link */}
-        <Link href="/auth/registracia" passHref legacyBehavior>
-          <BottomNavigationAction label="Registrácia" icon={<AppRegistrationIcon />} />
-        </Link>
+        {status === "authenticated" ? (
+          <BottomNavigationAction
+            label={`Odhlásiť (${session?.user?.name})`}  // Display the user's name
+            value="/auth/odhlasenie"
+            icon={<LogoutIcon />}
+          />
+        ) : (
+          [
+            <BottomNavigationAction key="login" label="Prihlásenie" value="/auth/prihlasenie" icon={<LoginIcon />} />,
+            <BottomNavigationAction key="register" label="Registrácia" value="/auth/registracia" icon={<AppRegistrationIcon />} />
+          ]
+        )}
       </BottomNavigation>
     </Box>
   );

@@ -6,6 +6,6 @@ export const metadata = { title: 'Detail profilu | KamNaKavu'};
 
 export default function ProfileDetail() {
   return (
-    <Typography>Detail profilu</Typography>
+    <Typography>Detail profilu cislo </Typography>
   );
 }

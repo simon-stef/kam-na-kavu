@@ -10,7 +10,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import LoginIcon from '@mui/icons-material/Login';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
-import LogoutIcon from '@mui/icons-material/Logout';
+//import LogoutIcon from '@mui/icons-material/Logout';
 import { useRouter } from 'next/navigation';
 //import { useSession } from "next-auth/react";
 
@@ -34,19 +34,12 @@ export default function Navbar() {
         <BottomNavigationAction label="Domov" value="/" icon={<HomeIcon />} />
         <BottomNavigationAction label="Profily" value="/profil" icon={<AccountCircleIcon />} />
         <BottomNavigationAction label="Príspevky" value="/prispevok" icon={<AddCircleIcon />} />
-
-        {status === "authenticated" ? (
-          <BottomNavigationAction
-            label={`Odhlásiť (${session?.user?.name})`}  // Display the user's name
-            value="/auth/odhlasenie"
-            icon={<LogoutIcon />}
-          />
         ) : (
           [
             <BottomNavigationAction key="login" label="Prihlásenie" value="/auth/prihlasenie" icon={<LoginIcon />} />,
             <BottomNavigationAction key="register" label="Registrácia" value="/auth/registracia" icon={<AppRegistrationIcon />} />
           ]
-        )}
+        )
       </BottomNavigation>
     </Box>
   );

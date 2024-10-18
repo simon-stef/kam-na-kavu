@@ -9,8 +9,3 @@ export default function Home() {
     <Typography>Domovská stránka</Typography>
   );
 }
-
-
-
-
-

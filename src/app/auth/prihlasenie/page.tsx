@@ -1,11 +1,10 @@
 // src/app/auth/prihlasenie/page.tsx
+"use client";
 
-import Typography from '@mui/material/Typography';
-
-export const metadata = { title: 'Prihlásiť sa | KamNaKavu'};
+import { getProviders, signIn } from "next-auth/react";
 
 export default function SignIn() {
   return (
-    <Typography>Prihlásiť sa</Typography>
+    <button onClick={() => signIn("google")}>Sign in with Google</button>
   );
 }

@@ -1,15 +1,13 @@
-//src/app/layout.tsx
+// src/app/layout.tsx
 
-import type { Metadata } from "next";
+import { Metadata } from "next";
 import "./globals.css";
-import SimpleBottomNavigation from "@/components/NavBar";
-import { Inter } from 'next/font/google';
-
-const inter = Inter({ subsets: ['latin'] });
+import Navbar from "@/components/NavBar";
+import AuthProvider from "../components/AuthProvider";
 
 export const metadata: Metadata = {
-  title: "Kam na kávu",
-  description: "Webstránka na hodnotenie kaviární",
+  title: "KamNaKávu",
+  description: "Webstránka na hodnotenie kaviární.",
 };
 
 export default function RootLayout({
@@ -19,13 +17,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sk">
-      <body className={inter.className} style={{ margin: 0, padding: 0, height: '100vh', width: "100%", display: 'flex', flexDirection: 'column' }}>
-        {/* Main content container */}
-        <div style={{ flex: 1, overflowY: 'auto' }}>
-          {children} {/* Page content */}
-        </div>
-        <SimpleBottomNavigation />
-        </body>
+      <body>
+        <AuthProvider>
+          <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <main style={{ flexGrow: 1 }}>
+              {children}
+            </main>
+          </div>
+          <Navbar /> 
+        </AuthProvider>
+      </body>
     </html>
   );
 }

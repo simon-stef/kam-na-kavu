@@ -18,8 +18,8 @@ export default function Home() {
       
   return (
     <div>
-      <h1>Vitaj, {session.user.name}</h1>
-      <p>Váš email je: {session.user.email}</p>
+      <h1>Vitaj, {session?.user?.name}</h1>
+      <p>Váš email je: {session?.user?.email}</p>
     </div>
   );
     }

@@ -1,8 +1,8 @@
 // src/app/(home)
 "use client";
 
-import Typography from '@mui/material/Typography';
-import { useSession, signIn, signOut } from "next-auth/react";
+// import Typography from '@mui/material/Typography';
+import { useSession } from "next-auth/react";
 
 //export const metadata = { title: 'Domovská stránka | KamNaKavu'};
 

@@ -1,12 +1,14 @@
+//'use client';
+
 // src/app/auth/odhlasenie/page.tsx
 
 // import Typography from '@mui/material/Typography';
 
+import SignOutView from "@/sections/SignOutView";
+//import { signOut }  from "next-auth/react";
+
 export const metadata = { title: 'Odhlásiť sa | KamNaKavu'};
 
-export default function SignOut() {
-  return (
-    <button onClick={() => signOut()}>Odhlásiť sa</button>
-
-  );
+export default function SignOutPage() {
+  return (<SignOutView/>);
 }

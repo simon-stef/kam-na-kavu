@@ -2,7 +2,7 @@
 
 import SignInView from "@/sections/SignInView";
 
-export const metadata = { title: 'Odhlásiť sa | KamNaKavu'};
+export const metadata = { title: 'Prihlásiť sa | KamNaKavu'};
 
 //import { signIn } from "next-auth/react";
 

@@ -1,7 +1,8 @@
 // src/app/(home)
 "use client";
 
-// import Typography from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box'
 import { useSession } from "next-auth/react";
 
 //export const metadata = { title: 'Domovská stránka | KamNaKavu'};
@@ -10,16 +11,17 @@ export default function Home() {
   const { data: session} = useSession();
   if (!session) {
     return (
-      <div>
-        <h1>NEprihlásený pouzívateľ, ak chceš pokračovať, prosím prihlás sa alebo si sprav účet na našej stránke.</h1>
-      </div>
+      <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" minHeight="100vh">
+        <Typography variant="h3" align="center"><strong>Neprihlásený</strong> používateľ</Typography>
+        <Typography variant="h5" align="center">ak chceš pokračovať, prosím <strong>prihlás sa</strong> alebo si <strong>sprav účet</strong> na našej stránke.</Typography>
+      </Box>        
       );
   }
       
   return (
-    <div>
-      <h1>Vitaj, {session?.user?.name}</h1>
-      <p>Váš email je: {session?.user?.email}</p>
-    </div>
+    <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" minHeight="100vh">
+      <Typography variant="h3" align="center">Vitaj, {session?.user?.name}</Typography>
+      <Typography variant="h5" align="center">Váš email je: {session?.user?.email}</Typography>
+    </Box>  
   );
     }

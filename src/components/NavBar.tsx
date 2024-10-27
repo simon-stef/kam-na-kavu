@@ -32,8 +32,8 @@ export default function Navbar() {
         onChange={handleNavigation}
       >
         <BottomNavigationAction label="Domov" value="/" icon={<HomeIcon />} />
-        <BottomNavigationAction label="Profily" value="/profil" icon={<AccountCircleIcon />} />
         <BottomNavigationAction label="Príspevky" value="/prispevok" icon={<AddCircleIcon />} />
+        <BottomNavigationAction label="Profil" value="/profil" icon={<AccountCircleIcon />} />
         {!session ? (
           <BottomNavigationAction label="Prihlásiť sa" icon={<LoginIcon />} value="/auth/prihlasenie"/>
         ) : (

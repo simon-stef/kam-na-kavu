@@ -11,7 +11,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 export default function SignInView() {
   return (
     <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-      <Box sx={{display:"flex", flexDirection:"column", alignItems:"center", height:"100%", width:"20%", bgcolor:"#ebebeb", padding:"1%", gap:2, borderRadius:"5px"}}>
+      <Box sx={{display:"flex", flexDirection:"column", alignItems:"center", height:"100%", bgcolor:"#ebebeb", padding:"4%", gap:2, borderRadius:"5px"}}>
         <Typography variant="h5"><strong>Prihlásiť sa</strong></Typography>
         <Button variant='contained' startIcon={<GoogleIcon />} onClick={() => signIn("google")}>Prihlásiť sa pomocou Google</Button>
       </Box>

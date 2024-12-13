@@ -1,25 +1,37 @@
 'use client';
 
-import React from 'react';
-import Box from '@mui/material/Box';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import * as React from 'react';
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Box,
+  PaletteMode,
+  IconButton
+} from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
 import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import SearchIcon from '@mui/icons-material/Search';
-import GavelIcon from '@mui/icons-material/Gavel';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useSession, signOut } from 'next-auth/react'; // Added `signOut` for logout
 import { useRouter } from 'next/navigation';
+import { useTheme } from '@/components/ThemeProvider';
+
+interface NavBarProps {
+  mode: PaletteMode;
+  setMode: (mode: PaletteMode) => void;
+}
 
 export default function Navbar() {
   const { data: session } = useSession();
   const [value, setValue] = React.useState('/');
   const router = useRouter();
+  const { mode, toggleTheme } = useTheme();
 
   const handleNavigation = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -44,7 +56,6 @@ export default function Navbar() {
     : [
         { label: 'Domov', icon: <HomeIcon />, value: '/' },
         { label: 'O mne', icon: <InfoIcon />, value: '/o-mne' },
-        { label: 'GDPR', icon: <GavelIcon />, value: '/gdpr' },
         { label: 'Prihlásenie', icon: <LoginIcon />, value: '/auth/prihlasenie' },
         { label: 'Registrácia', icon: <PersonAddIcon />, value: '/auth/registracia' },
       ];
@@ -59,6 +70,12 @@ export default function Navbar() {
         right: 0,
       }}
     >
+            <IconButton sx={{ position: 'absolute', right: 16, top: -48 }}
+        onClick={toggleTheme}
+        color="inherit"
+      >
+        {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
       <BottomNavigation
         showLabels
         value={value}

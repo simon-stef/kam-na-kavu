@@ -4,6 +4,8 @@ import { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/NavBar";
 import AuthProvider from "../components/AuthProvider";
+import {ThemeProvider} from "../components/ThemeProvider"; // Import custom ThemeProvider
+import ThemeSwitcher from "../components/ThemeSwitcher"; // Import ThemeSwitcher
 
 export const metadata: Metadata = {
   title: "KamNaKávu",
@@ -19,12 +21,16 @@ export default function RootLayout({
     <html lang="sk">
       <body>
         <AuthProvider>
-          <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <main style={{ flexGrow: 1 }}>
-              {children}
-            </main>
-          </div>
-          <Navbar /> 
+          <ThemeProvider>
+            <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+              <Navbar />
+              <div style={{ position: 'fixed', top: 10, right: 10, zIndex: 1000 }}>
+              </div>
+              <main style={{ flexGrow: 1 }}>
+                {children}
+              </main>
+            </div>
+          </ThemeProvider>
         </AuthProvider>
       </body>
     </html>

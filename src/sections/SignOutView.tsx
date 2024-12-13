@@ -12,7 +12,7 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 export default function SignOutView() {
   return (
     <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-      <Box sx={{display:"flex", flexDirection:"column", alignItems:"center", height:"100%", bgcolor:"#ebebeb", padding:"4%", gap:2, borderRadius:"5px"}}>
+      <Box sx={{display:"flex", flexDirection:"column", alignItems:"center", height:"100%", bgcolor:"#ebebeb", padding:"4%", gap:2, borderRadius:"5px", boxShadow:3}}>
         <Typography variant="h5"><strong>Naozaj sa chcete odhlásiť?</strong></Typography>
         <Button variant='contained' startIcon={<ExitToAppIcon />} onClick={() => signOut()}>Odhlásiť sa</Button>
       </Box>

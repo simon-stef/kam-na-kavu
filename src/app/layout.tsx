@@ -5,7 +5,6 @@ import "./globals.css";
 import Navbar from "@/components/NavBar";
 import AuthProvider from "../components/AuthProvider";
 import {ThemeProvider} from "../components/ThemeProvider"; // Import custom ThemeProvider
-import ThemeSwitcher from "../components/ThemeSwitcher"; // Import ThemeSwitcher
 
 export const metadata: Metadata = {
   title: "KamNaKávu",

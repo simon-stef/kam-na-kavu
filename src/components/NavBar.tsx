@@ -5,7 +5,6 @@ import {
   BottomNavigation,
   BottomNavigationAction,
   Box,
-  PaletteMode,
   IconButton
 } from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
@@ -21,11 +20,6 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useSession, signOut } from 'next-auth/react'; // Added `signOut` for logout
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@/components/ThemeProvider';
-
-interface NavBarProps {
-  mode: PaletteMode;
-  setMode: (mode: PaletteMode) => void;
-}
 
 export default function Navbar() {
   const { data: session } = useSession();

@@ -27,11 +27,4 @@ export default function Home() {
       </Box>        
       );
   }
-      
-  return (
-    <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" minHeight="100vh">
-      <Typography variant="h3" align="center">Vitaj, {session?.user?.name}</Typography>
-      <Typography variant="h5" align="center">Váš email je: {session?.user?.email}</Typography>
-    </Box>  
-  );
     }

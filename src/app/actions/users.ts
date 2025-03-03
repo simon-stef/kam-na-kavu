@@ -26,3 +26,30 @@ export const searchUsers = async (searchTerm: string) => {
     throw new Error("Could not search users");
   }
 };
+
+export const getUserProfile = async (id: string) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        profile: true,
+        posts: {
+          orderBy: {
+            createdAt: 'desc'
+          }
+        }
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return user;
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    throw new Error("Could not fetch user profile");
+  }
+};

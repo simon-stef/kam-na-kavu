@@ -1,11 +1,15 @@
 // src/app/profil/[id]/page.tsx
 
-import Typography from '@mui/material/Typography';
-
 export const metadata = { title: 'Detail profilu | KamNaKavu'};
 
-export default function ProfileDetail() {
-  return (
-    <Typography>Detail profilu cislo </Typography>
-  );
+import ProfileView from '@/sections/ProfileView';
+
+interface ProfilePageProps {
+  params: {
+    id: string;
+  };
 }
+
+export default function ProfilePage({ params }: ProfilePageProps) {
+  return <ProfileView id={params.id} />;
+} 

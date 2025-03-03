@@ -25,7 +25,7 @@ export default function RootLayout({
               <Navbar />
               <div style={{ position: 'fixed', top: 10, right: 10, zIndex: 1000 }}>
               </div>
-              <main style={{ flexGrow: 1 }}>
+              <main style={{ flexGrow: 1, paddingBottom: '80px' }}>
                 {children}
               </main>
             </div>

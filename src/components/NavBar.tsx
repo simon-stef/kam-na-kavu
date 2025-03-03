@@ -43,8 +43,8 @@ export default function Navbar() {
     ? [
         { label: 'Domov', icon: <HomeIcon />, value: '/' },
         { label: 'Hľadať', icon: <SearchIcon />, value: '/hladanie' },
-        { label: 'Profily', icon: <PersonIcon />, value: '/profil' },
         { label: 'Pridať', icon: <AddIcon />, value: '/pridat' },
+        { label: 'Profily', icon: <PersonIcon />, value: '/profil' },
         { label: 'Odhlásiť', icon: <LogoutIcon />, value: '/auth/odhlasenie' },
       ]
     : [
@@ -62,9 +62,23 @@ export default function Navbar() {
         bottom: 0,
         left: 0,
         right: 0,
+        zIndex: 1000,
+        backdropFilter: 'blur(10px)',
+        backgroundColor: mode === 'light' 
+          ? 'rgba(255, 255, 255, 0.8)'
+          : 'rgba(30, 30, 30, 0.8)',
       }}
     >
-            <IconButton sx={{ position: 'absolute', right: 16, top: -48 }}
+      <IconButton 
+        sx={{ 
+          position: 'absolute', 
+          right: 16, 
+          top: -48,
+          backdropFilter: 'blur(10px)',
+          backgroundColor: mode === 'light' 
+            ? 'rgba(255, 255, 255, 0.8)'
+            : 'rgba(30, 30, 30, 0.8)',
+        }}
         onClick={toggleTheme}
         color="inherit"
       >
@@ -75,7 +89,7 @@ export default function Navbar() {
         value={value}
         onChange={handleNavigation}
         sx={{
-          backgroundColor: 'background.paper',
+          backgroundColor: 'transparent',
           '& .MuiBottomNavigationAction-root': {
             color: 'text.secondary',
             '&.Mui-selected': {

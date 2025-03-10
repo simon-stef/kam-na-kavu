@@ -53,3 +53,39 @@ export const getUserProfile = async (id: string) => {
     throw new Error("Could not fetch user profile");
   }
 };
+
+export const updateProfile = async (
+  userId: string,
+  data: {
+    name?: string;
+    bio?: string;
+    location?: string;
+  }
+) => {
+  try {
+    // Update user name
+    await prisma.user.update({
+      where: { id: userId },
+      data: { name: data.name }
+    });
+
+    // Get or create profile
+    const profile = await prisma.profile.upsert({
+      where: { userId },
+      create: {
+        userId,
+        bio: data.bio,
+        location: data.location,
+      },
+      update: {
+        bio: data.bio,
+        location: data.location,
+      },
+    });
+
+    return profile;
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    throw new Error("Could not update profile");
+  }
+};

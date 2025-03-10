@@ -5,9 +5,9 @@ import {
   BottomNavigation,
   BottomNavigationAction,
   Box,
-  IconButton
+  IconButton,
+  Avatar
 } from "@mui/material";
-import PersonIcon from '@mui/icons-material/Person';
 import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import HomeIcon from '@mui/icons-material/Home';
@@ -17,7 +17,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { useSession, signOut } from 'next-auth/react'; // Added `signOut` for logout
+import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@/components/ThemeProvider';
 
@@ -30,13 +30,36 @@ export default function Navbar() {
   const handleNavigation = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
 
-    // Custom handling for Logout
     if (newValue === '/auth/odhlasenie') {
-      signOut(); // Triggers the logout flow
+      signOut();
     } else {
-      router.push(newValue); // Navigate to the selected route
+      router.push(newValue);
     }
   };
+
+  // Custom Profile Icon component
+  const ProfileIcon = () => (
+    session?.user?.image ? (
+      <Avatar 
+        src={session.user.image}
+        alt={session.user.name || "Profile"}
+        sx={{ 
+          width: 24, 
+          height: 24,
+          // Add a slight border to make the avatar stand out
+          border: '1px solid',
+          borderColor: 'primary.main'
+        }}
+      />
+    ) : (
+      <Avatar 
+        sx={{ 
+          width: 24, 
+          height: 24 
+        }}
+      />
+    )
+  );
 
   // Navigation items
   const navItems = session
@@ -44,7 +67,7 @@ export default function Navbar() {
         { label: 'Domov', icon: <HomeIcon />, value: '/' },
         { label: 'Hľadať', icon: <SearchIcon />, value: '/hladanie' },
         { label: 'Pridať', icon: <AddIcon />, value: '/pridat' },
-        { label: 'Profily', icon: <PersonIcon />, value: '/profil' },
+        { label: 'Profil', icon: <ProfileIcon />, value: '/profil' },
         { label: 'Odhlásiť', icon: <LogoutIcon />, value: '/auth/odhlasenie' },
       ]
     : [
@@ -103,7 +126,7 @@ export default function Navbar() {
             key={item.label}
             label={item.label}
             icon={item.icon}
-            value={item.value} // Ensure each item has a `value`
+            value={item.value}
             sx={{
               minWidth: 'auto',
               padding: '6px 12px',

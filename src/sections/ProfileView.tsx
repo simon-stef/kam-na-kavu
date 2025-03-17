@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getUserProfile } from '@/app/actions/users';
+import { fetchUserProfile } from '@/app/actions/users';
+import { getbookmarks } from '@/app/actions/bookmarks'; // Ensure you have this function
 import {
   Box,
   Avatar,
@@ -12,6 +13,7 @@ import {
   CardContent,
   Divider,
   CircularProgress,
+  Button,
 } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { User, Post, Profile } from '@prisma/client';
@@ -25,11 +27,13 @@ export default function ProfileView({ id }: { id: string }) {
   const [user, setUser] = useState<UserWithDetails | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [bookmarkedPosts, setBookmarkedPosts] = useState<Post[]>([]); // Initialize as empty array
+  const [showBookmarkedPosts, setShowBookmarkedPosts] = useState(false);
 
   useEffect(() => {
     const loadProfile = async () => {
       try {
-        const userData = await getUserProfile(id);
+        const userData = await fetchUserProfile(id);
         setUser(userData as UserWithDetails);
       } catch (err) {
         setError('Nepodarilo sa načítať profil používateľa');
@@ -41,6 +45,16 @@ export default function ProfileView({ id }: { id: string }) {
 
     loadProfile();
   }, [id]);
+
+  const loadBookmarkedPosts = async () => {
+    try {
+      const bookmarks = await getbookmarks(id);
+      setBookmarkedPosts(bookmarks);
+    } catch (err) {
+      setError('Nepodarilo sa načítať uložené príspevky');
+      console.error('Error loading bookmarked posts:', err);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -63,7 +77,7 @@ export default function ProfileView({ id }: { id: string }) {
       {/* Profile Header */}
       <Box sx={{ mb: 4, textAlign: 'center' }}>
         <Avatar
-          src={user.image || undefined}
+          src={user.image || '/default-avatar.png'} // Default fallback image
           alt={user.name || 'User'}
           sx={{
             width: 150,
@@ -119,7 +133,7 @@ export default function ProfileView({ id }: { id: string }) {
                 <CardMedia
                   component="img"
                   height="200"
-                  image={post.imageUrl}
+                  image={post.imageUrl || '/default-post-image.png'} // Default fallback image
                   alt={post.caption || 'Post image'}
                   sx={{ objectFit: 'cover' }}
                 />
@@ -135,6 +149,58 @@ export default function ProfileView({ id }: { id: string }) {
           ))}
         </Grid>
       )}
+
+      {/* Button to toggle Bookmarked Posts */}
+      <Box sx={{ my: 3, textAlign: 'center' }}>
+        <Button 
+          variant="outlined" 
+          color="primary" 
+          onClick={() => {
+            setShowBookmarkedPosts((prev) => !prev);
+            if (!showBookmarkedPosts) loadBookmarkedPosts(); // Load bookmarked posts if toggled to show
+          }}
+        >
+          {showBookmarkedPosts ? 'Zobraziť príspevky' : 'Zobraziť uložené príspevky'}
+        </Button>
+      </Box>
+
+      {/* Bookmarked Posts */}
+      {showBookmarkedPosts && bookmarkedPosts.length > 0 && (
+        <Box>
+          <Typography variant="h5" gutterBottom sx={{ mb: 3 }}>
+            Uložené príspevky
+          </Typography>
+          <Grid container spacing={3}>
+            {bookmarkedPosts.map((post) => (
+              <Grid item xs={12} sm={6} md={4} key={post.id}>
+                <Card sx={{ height: '100%' }}>
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    image={post.imageUrl || '/default-post-image.png'} // Default fallback image
+                    alt={post.caption || 'Bookmarked post image'}
+                    sx={{ objectFit: 'cover' }}
+                  />
+                  {post.caption && (
+                    <CardContent>
+                      <Typography variant="body2" color="text.secondary">
+                        {post.caption}
+                      </Typography>
+                    </CardContent>
+                  )}
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      )}
+
+      {/* If no bookmarked posts */}
+      {showBookmarkedPosts && bookmarkedPosts.length === 0 && (
+        <Typography color="text.secondary" textAlign="center">
+          Žiadne uložené príspevky
+        </Typography>
+      )}
     </Box>
   );
-} 
+}

@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import { updateProfile } from '@/app/actions/users';
+import { updateUserProfile } from '@/app/actions/users';
 
 interface EditProfileFormProps {
   initialData: {
@@ -27,7 +27,7 @@ export default function EditProfileForm({ initialData, userId }: EditProfileForm
     setIsSubmitting(true);
 
     try {
-      await updateProfile(userId, formData);
+      await updateUserProfile(userId, formData);
       router.push('/profil');
       router.refresh();
     } catch (error) {

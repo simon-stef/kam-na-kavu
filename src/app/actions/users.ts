@@ -5,7 +5,7 @@ import { prisma } from "@/app/api/auth/[...nextauth]/prisma";
 export const searchUsers = async (searchTerm: string) => {
   try {
     const users = await prisma.user.findMany({
-      where: searchTerm ? {
+      where: searchTerm.trim() ? {
         name: {
           contains: searchTerm,
           mode: 'insensitive', // Case-insensitive search
@@ -17,7 +17,7 @@ export const searchUsers = async (searchTerm: string) => {
       orderBy: {
         name: 'asc', // Order by name alphabetically
       },
-      take: 20, // Limit results to 20 users
+      take: 20, // Increased limit for showing all users
     });
 
     return users;
@@ -27,24 +27,37 @@ export const searchUsers = async (searchTerm: string) => {
   }
 };
 
-export const getUserProfile = async (id: string) => {
+export const getUserIdByEmail = async (email: string) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email },
+      select: { id: true }
+    });
+    return user?.id;
+  } catch (error) {
+    console.error("Error fetching user ID:", error);
+    throw new Error("Could not fetch user ID");
+  }
+};
+
+export const fetchUserProfile = async (userId: string) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
-        id,
+        id: userId,
       },
       include: {
         profile: true,
         posts: {
           orderBy: {
-            createdAt: 'desc'
-          }
-        }
+            createdAt: 'desc',
+          },
+        },
       },
     });
 
     if (!user) {
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
 
     return user;
@@ -54,23 +67,22 @@ export const getUserProfile = async (id: string) => {
   }
 };
 
-export const updateProfile = async (
-  userId: string,
-  data: {
-    name?: string;
-    bio?: string;
-    location?: string;
-  }
-) => {
+type ProfileUpdateData = {
+  name: string;
+  bio: string;
+  location: string;
+};
+
+export const updateUserProfile = async (userId: string, data: ProfileUpdateData) => {
   try {
     // Update user name
-    await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: { id: userId },
-      data: { name: data.name }
+      data: { name: data.name },
     });
 
-    // Get or create profile
-    const profile = await prisma.profile.upsert({
+    // Update or create profile
+    const updatedProfile = await prisma.profile.upsert({
       where: { userId },
       create: {
         userId,
@@ -83,9 +95,9 @@ export const updateProfile = async (
       },
     });
 
-    return profile;
+    return { user: updatedUser, profile: updatedProfile };
   } catch (error) {
     console.error("Error updating profile:", error);
     throw new Error("Could not update profile");
   }
-};
+}; 

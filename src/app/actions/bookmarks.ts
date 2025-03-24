@@ -58,9 +58,9 @@ export const isSavedByUser = async (postId: string, userId: string) => {
   }
 };
 
-export const getbookmarks = async (userId: string) => {
+export const getbookmark = async (userId: string) => {
   try {
-    const bookmarks = await prisma.bookmark.findMany({
+    const bookmark = await prisma.bookmark.findMany({
       where: {
         userId,
       },
@@ -85,7 +85,7 @@ export const getbookmarks = async (userId: string) => {
     });
 
     // Filter out any null posts and map to just the post data
-    return bookmarks
+    return bookmark
       .filter(save => save.post !== null)
       .map(save => ({
         ...save.post,

@@ -72,7 +72,7 @@ export default function Navbar() {
       ]
     : [
         { label: 'Domov', icon: <HomeIcon />, value: '/' },
-        { label: 'O mne', icon: <InfoIcon />, value: '/o-mne' },
+        { label: 'O nás', icon: <InfoIcon />, value: '/o-nas' },
         { label: 'Prihlásenie', icon: <LoginIcon />, value: '/auth/prihlasenie' },
         { label: 'Registrácia', icon: <PersonAddIcon />, value: '/auth/registracia' },
       ];

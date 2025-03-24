@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/app/api/auth/[...nextauth]/prisma";
 import EditProfileForm from "@/components/EditProfileForm";
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";

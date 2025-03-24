@@ -2,7 +2,7 @@
 
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/app/api/auth/[...nextauth]/prisma";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -11,6 +11,8 @@ import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions"; // Import CardActions
+import { CardMedia } from "@mui/material"; // Import CardMedia
 
 export const metadata = { 
   title: 'Môj profil | KamNaKavu',
@@ -29,7 +31,12 @@ export default async function ProfilePage() {
       email: session.user.email
     },
     include: {
-      profile: true
+      profile: true,
+      Bookmark: {
+        include: {
+          post: true
+        }
+      }
     }
   });
 
@@ -77,6 +84,32 @@ export default async function ProfilePage() {
           </Box>
         </CardContent>
       </Card>
+
+      {/* Display saved posts */}
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h6" gutterBottom>
+          Uložené príspevky
+        </Typography>
+        {user.Bookmark.length > 0 ? (
+          user.Bookmark.map((bookmark) => (
+            <Card key={bookmark.id} sx={{ mb: 2 }}>
+              <CardMedia
+                component="img"
+                image={bookmark.post.imageUrl}
+                alt={bookmark.post.caption || "Príspevok bez popisu"}
+              />
+              <CardContent>
+                <Typography variant="body1">{bookmark.post.caption || "Bez popisu"}</Typography>
+              </CardContent>
+              <CardActions>
+                {/* Add any actions you want for the saved posts */}
+              </CardActions>
+            </Card>
+          ))
+        ) : (
+          <Typography>Žiadne uložené príspevky</Typography>
+        )}
+      </Box>
     </Container>
   );
 }

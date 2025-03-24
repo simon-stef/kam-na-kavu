@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { fetchUserProfile } from '@/app/actions/users';
-import { getbookmarks } from '@/app/actions/bookmarks'; // Ensure you have this function
+import { getbookmark } from '@/app/actions/bookmarks'; // Ensure you have this function
 import {
   Box,
   Avatar,
@@ -48,7 +48,7 @@ export default function ProfileView({ id }: { id: string }) {
 
   const loadBookmarkedPosts = async () => {
     try {
-      const bookmarks = await getbookmarks(id);
+      const bookmarks = await getbookmark(id);
       setBookmarkedPosts(bookmarks);
     } catch (err) {
       setError('Nepodarilo sa načítať uložené príspevky');
